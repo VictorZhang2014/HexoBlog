@@ -25,11 +25,11 @@ nvm install 4.5.0
 #### 1.新建一个github的repository，名称必须后缀为.github.io
    例如：  victorzhang2014.github.io 名称必须和自己的github账户名相同
 
-#### 2.安装hexo  全局安装，加-g参数
+#### 2.安装hexo必要的组件  全局安装，加-g参数
   ```
    sudo npm install hexo --save   # 或者 sudo npm install -g hexo
-   sudo npm install hexo-deployer-git -save
-   sudo npm install hexo-server --save
+   sudo npm install hexo-deployer-git -save    # hexo发布时使用的命令
+   sudo npm install hexo-server --save         # hexo调试时的本地server
   ```
 
 #### 3.新建一个hexo文件夹
@@ -108,7 +108,7 @@ deploy:
 #### 10.可以成功预览了
   https://victorzhang2014.github.io
 
-#### 11.如果需要绑定自己的申请的域名和hexo站点文件，需要建立一个CNAME文件
+#### 11.如果需要绑定自己的申请的域名和hexo站点文件，需要建立一个CNAME文件在public目录下
   ```
    echo  > public/CNAME
   ```
