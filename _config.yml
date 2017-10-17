@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Victor's Blog | Technologies and LifeStyle
+title: Simplicity | Perfection
 subtitle: "What will you do if you weren't afraid ? "
-SEOtitle: Victor's Blog | Technologies and LifeStyle
-description: "The best preparation for tomorrow is doing best today."
+SEOtitle: "iOS,逆向工程,AI,.NET"
+description: "iOS,逆向工程,AI,.NET"
 author: Victor Zhang
 language: cn
-timezone:
+timezone: 
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -34,9 +34,9 @@ default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
-render_drafts: false
-post_asset_folder: false
-relative_link: false
+render_drafts: true
+post_asset_folder: true
+relative_link: true
 future: true
 highlight:
   enable: true
@@ -54,7 +54,7 @@ index_generator:
   order_by: -date
   
 # Category & Tag
-default_category: uncategorized
+default_category: categorized
 category_map:
 tag_map:
 
