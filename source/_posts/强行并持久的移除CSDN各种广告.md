@@ -4,6 +4,10 @@ date: 2017-10-19 03:52:17
 tags: 移除, CSDN, 广告
 ---
 
+ # 移除CSDN各种广告 - Safari浏览器专用插件
+
+`故事背景`：受够了CSDN的各种垃圾广告，还满天飞。。。每次查资料时，总是郁闷的看到了`左下角`，`右下角`的`广告`，忍无可忍之日，今天，我就专门写了个`工具`，其实是`Safari插件`，干掉 `CSDN.com` 和 `CSDN.net`上的各种页面的广告。如果你也和我一样烦透了CSDN的广告，那就`装上`我写的这个`插件`吧。超级`简单`的哦~~~ 
+由于我把这个小插件放到了`Firebase`的仓库，所以`下载`时，需要你的`网络`可以`连接Google`，如果你的`网络不能`连接google，请给我`发邮件`或者本站的`右边栏`的`联系方式`联系我，我会给你直接发送插件
 
 # 方案1
 - 1.该下载要求你的网络可以连接上google， [下载插件](https://firebasestorage.googleapis.com/v0/b/safari-extensions-20171019.appspot.com/o/EliminateCSDNAds.safariextension.zip?alt=media&token=1a426d99-f63f-4342-8601-44a8fd0e79bc)
@@ -51,3 +55,8 @@ tags: 移除, CSDN, 广告
 **注意**
 * 如果在第三步时，没有看到如图所示的插件，那么可以尝试关闭Safari浏览器，在打开，一般第二次或者第三次打开就能显示出来了
 
+
+<br/>
+如果你有更好的建议，或者说，你还想屏蔽哪些网站的广告，请邮件我，我会抽空添加的😄
+
+<a href="/2017/09/19/Safari-Extension-Development/">DIY一个插件</a>

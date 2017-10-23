@@ -48,7 +48,7 @@ Compiling native CydiaSubstrate stub... Generating substrate.h header...
 ```
 Here we’ll meet a bug that Theos cannot generate a working libsubstrate.dylib, which requires our manual fixes. Piece of cake: first search and install CydiaSubstrate in Cydia, as shown in figure below.
 
-![CydiaSubstrate](/img/WX20170604-cydiasubstrate-1.png)
+![CydiaSubstrate](/img/iOS/ReverseEngineering/WX20170604-cydiasubstrate-1.png)
 
 Then copy “/Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate” on iOS to somewhere on OSX such as the desktop using iFunBox or scp. Rename it libsubstrate.dylib and copy it to “/opt/theos/lib/libsubstrate.dylib” to replace the invalid file.
 
@@ -73,11 +73,11 @@ Copy the extra 5 templates to `/opt/theos/templates/iphone/`
 # 3. The use of theos
 ## 3.1 Create Theos project
 Change Theos’ working directory to whatever you want (like mine is “/User/VictorZhang/Documents/iOS/Projects/theos/”), and then enter `/opt/theos/bin/nic.pl` to start NIC (New Instance Creator), as follows:
-![theos](/img/theos-1.png)
+![theos](/img/iOS/ReverseEngineering/theos-1.png)
 
 ## 3.2 A simple theos project
 That is t will alert and UIAlertView when every launching; Here we select nineth template
-![theos](/img/thoes-2.png)
+![theos](/img/iOS/ReverseEngineering/thoes-2.png)
 
 ```
 1)  Chose “9” to create a tweak project:
@@ -94,7 +94,7 @@ Package Name [com.yourcompany.iosreproject]: com.iosre.iosregreetings
 ```
 After these 5 simple steps, a folder named iosregreetings is created in the current directory, which contains the tweak project we just created.
 Then effect 1
-![theos](/img/theos-3.png)
+![theos](/img/iOS/ReverseEngineering/theos-3.png)
 
 
 ## 3.3 Modify Makefile file
@@ -175,10 +175,10 @@ make package install
 While installing , the Terminal will ask for twice SSH password, don't worry, it's normal conditions.
 When installed completely, iPhone will launch automatically. 
 NOTE THAT: Do not unlock your iPhone, just press home button once so that the screen will light, and you'll see the figure as shown below.
-![theos](/img/theos-4-1.png)
+![theos](/img/iOS/ReverseEngineering/theos-4-1.png)
 
 And then , unlock your iPhone, open Cydian, you'll see the iOSREGreetings app as shown in figure below.
-![theos](/img/theos-5-1.png)
+![theos](/img/iOS/ReverseEngineering/theos-5-1.png)
 
 
 ## 3.7 clean command

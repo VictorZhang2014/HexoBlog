@@ -42,9 +42,9 @@ First of all, you have to prepare some tools and libraries which I show you unde
 When you get ready for these necessary software and hardware, then I start with [dumpdecrypted](https://github.com/VictorZhang2014/dumpdecrypted) is open source project that you can find it on [github]((https://github.com/VictorZhang2014/dumpdecrypted)).
 
 ### 1.Firstly, we have to generate a dumpdecrypted.dylib that is a dynamic library, because we need it for unshelling the encrypted binary file.
-![dumpdecrypted command](/img/dumpdecryptedCommand.png)
+![dumpdecrypted command](/img/iOS/ReverseEngineering/dumpdecryptedCommand.png)
 You'll see a dynamic library
-![dumpdecrypted directory](/img/dumpdecryptedDirectory.png)
+![dumpdecrypted directory](/img/iOS/ReverseEngineering/dumpdecryptedDirectory.png)
 
 
 <br/>
@@ -54,18 +54,18 @@ Here, I choose [iFunBox](http://www.i-funbox.com/).
 
 >Figure - 1. All the sandbox of applications directory, but you have to find one what you want.
 
-![iFunBox Applications SandBox Directory](/img/iFunBoxApplicationsSandBoxDir.png)
+![iFunBox Applications SandBox Directory](/img/iOS/ReverseEngineering/iFunBoxApplicationsSandBoxDir.png)
 
 >Figure - 2. Application Directory, we take WeChat.app for instance.
 
-![iFunBox Application Directory](/img/iFunBoxApplicationDirectory.png)
+![iFunBox Application Directory](/img/iOS/ReverseEngineering/iFunBoxApplicationDirectory.png)
 
 >Figure - 3. The SandBox of WeChat application  [What's Sandbox on iPhone?](https://developer.apple.com/library/content/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html)
 
-![iFunBox Application SandBox Directory](/img/iFunBoxApplicationSandBoxDirectory.png)
+![iFunBox Application SandBox Directory](/img/iOS/ReverseEngineering/iFunBoxApplicationSandBoxDirectory.png)
 
 >Figure - 4. Copies dumpdecrypted.dylib to the document directory of sandbox of WeChat application.
-![iFunBox ApplicationSandBox dumpdecrypted.dylib](/img/iFunBoxApplicationSandBoxDumpDecrypted.png)
+![iFunBox ApplicationSandBox dumpdecrypted.dylib](/img/iOS/ReverseEngineering/iFunBoxApplicationSandBoxDumpDecrypted.png)
 
 <br/>
 >Please Note: If you don't know how to find the application out you want, then use of Terminal on your Mac.  You connect to the Jailbroken iPhone by OpenSSH. When you will have connected to the iPhone, use of `find` command to search the application name and its path will show you directly.
@@ -76,16 +76,16 @@ Here, I choose [iFunBox](http://www.i-funbox.com/).
 ### 3.The stirring moment will has showcased underneath. That unshell the application. One thing we all knew that the application which had been encrypted its binary file while we submitted it to the App Store. We download any one of application to the iPhone from App Store so that we can analyse it.
 
 1.At first, Go to the sandbox of the application use of OpenSSH. You'll see the `dumpdecrypted.dylib` displayed here;
-![JailBrokeniPhoneSandBoxWeChatDocuments](/img/JailBrokeniPhoneSandBoxWeChatDocuments.png)
+![JailBrokeniPhoneSandBoxWeChatDocuments](/img/iOS/ReverseEngineering/JailBrokeniPhoneSandBoxWeChatDocuments.png)
 
 2.Then, we are going to dump the encrypted binary of WeChat.
 ```
 DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib /private/var/mobile/Containers/Bundle/Application/EBB2963F-EB9D-4BE1-9D9C-4A281C0D827E/WeChat.app/WeChat
 ```
-![JailBrokeniPhoneWeChatDumpEncryptedBinary](/img/JailBrokeniPhoneWeChatDumpEncryptedBinary.png)
+![JailBrokeniPhoneWeChatDumpEncryptedBinary](/img/iOS/ReverseEngineering/JailBrokeniPhoneWeChatDumpEncryptedBinary.png)
 
 3.Finally, we got `WeChat.decrypted` file which is meant for no encrypted, no secure in the WeChat sandbox Documents directory.
-![iFunBoxWeChatDumppedByDumpDecryptedTool](/img/iFunBoxWeChatDumppedByDumpDecryptedTool.png) 
+![iFunBoxWeChatDumppedByDumpDecryptedTool](/img/iOS/ReverseEngineering/iFunBoxWeChatDumppedByDumpDecryptedTool.png) 
 
 
 <br/>
@@ -103,10 +103,10 @@ class-dump --arch armv7 -S -s -H WeChat.decrypted -o Headers/
 ```
 Aha, it works! Really!!
 See? All header files of WeChat application displays here.
-![WeChatLoginWithApiAllHeaderFiles](/img/WeChatLoginWithApiAllHeaderFiles.png)
+![WeChatLoginWithApiAllHeaderFiles](/img/iOS/ReverseEngineering/WeChatLoginWithApiAllHeaderFiles.png)
 
 I opened a class `WTLoginApi`
-![WeChatLoginWithApiHeaderFileByHopper](/img/WeChatLoginWithApiHeaderFileByHopper.png)
+![WeChatLoginWithApiHeaderFileByHopper](/img/iOS/ReverseEngineering/WeChatLoginWithApiHeaderFileByHopper.png)
 
 
 <br/>
@@ -117,7 +117,7 @@ So, I'm bound to use Hopper to find source code I want.
 Why Hopper? Actually, I'm prone to use Hopper, instead of IDA. If you're prone to use IDA, that's a good option.
 
 We take class `WTLoginApi` for example, and its function `loginWithPasswd:andPasswd:andSigBitmap:andLoginFlag:retData:`. See below.
-![WeChatLoginWithApiByHopper](/img/WeChatLoginWithApiByHopper.png)
+![WeChatLoginWithApiByHopper](/img/iOS/ReverseEngineering/WeChatLoginWithApiByHopper.png)
 
 
 As a matter of fact, if you want to understand it, you have to know about Assembly Language. Hopper gave us a very clear source code and call track, for learning reverse engineering, try learning AL.

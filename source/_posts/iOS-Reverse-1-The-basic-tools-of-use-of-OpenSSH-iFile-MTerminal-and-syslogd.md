@@ -9,7 +9,7 @@ tags: OpenSSH, iFile, MTerminal, syslogd
 
 OpenSSH will install SSH service on iOS (as shown in figure below). Only 2 commands are the most commonly used: ssh is used for remote logging, scp is used for remote file transfer. The usage of ssh is as follows:
 
-![OpenSSH](/img/WX20170604-OpenSSH-1.png)
+![OpenSSH](/img/iOS/ReverseEngineering/WX20170604-OpenSSH-1.png)
 
 ```
 ssh user@iOSIP
@@ -53,8 +53,8 @@ If we forget to change the default password, there’re chances that viruses lik
 iFile is a very powerful file management App, you can view it as Finder’s parallel on iOS. iFile is capable of all kinds of file operation including browsing, editing, cutting, copying and deb installing, possessing great convenience.
 iFile is rather user-friendly. Before installing a deb, remember to close Cydia at first, then tap the deb file to be installed and choose “Installer” in the action sheet, as shown in figure below.
 
-![iFile](/img/WX20170604-iFile-1.png)
-![iFile](/img/WX20170604-iFile-2.png)
+![iFile](/img/iOS/ReverseEngineering/WX20170604-iFile-1.png)
+![iFile](/img/iOS/ReverseEngineering/WX20170604-iFile-2.png)
 
 Due to iFile is chargeable. So I wrote a project which contans the most functionalities, and latter, I will finish it completely gradually, and it is free for anyone on github.
 https://github.com/iOS-Reverse-Engineering-Dev/iFiler
@@ -63,7 +63,7 @@ https://github.com/iOS-Reverse-Engineering-Dev/iFiler
 <br/>
 
 # 3.MTerminal
-![iFile](/img/WX20170604-MTerminal.png)
+![iFile](/img/iOS/ReverseEngineering/WX20170604-MTerminal.png)
 
 MTerminal is an open sourced Terminal on iOS with all basic functions available. The usage of MTerminal is no much difference to Terminal, if we put the screen and keyboard size aside. I
    
@@ -73,7 +73,7 @@ think the most practical scene of MTerminal is to test private methods in Cycrip
 <br/>
 
 # 4.syslogd to /var/log/syslog
-![iFile](/img/WX20170604-syslogd-to-1.png)
+![iFile](/img/iOS/ReverseEngineering/WX20170604-syslogd-to-1.png)
 syslogd is a daemon to record system logs on iOS, and “syslogd to /var/log/syslog” is used to write the logs to a file at “/var/log/syslog”. You need to reboot iOS after you install this tweak to automatically create the file “/var/log/syslog”. This file gets larger as time goes by, you can zero clear it with the following command:
 
 ```

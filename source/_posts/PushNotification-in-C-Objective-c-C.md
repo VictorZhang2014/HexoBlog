@@ -23,7 +23,7 @@ For each remote notification, your provider:
 * Sends the request to APNs over a persistent and secure channel that uses the HTTP/2 network protocol.
 
 
-![Notification Flow](/img/remote_notif_simple_2x.png)
+![Notification Flow](/img/iOS/notification/remote_notif_simple_2x.png)
 
 
 ## What can this repository do?
