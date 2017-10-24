@@ -2,6 +2,7 @@
 title: Converting Trained Models to Core ML
 date: 2017-10-23 19:43:32
 tags: Core ML
+categories: AI
 ---
 
 Convert trained models created with third-party machine learning tools to the Core ML model format.

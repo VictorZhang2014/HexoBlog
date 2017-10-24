@@ -2,6 +2,7 @@
 title: 强行并持久的移除CSDN各种广告
 date: 2017-10-19 03:52:17
 tags: 移除, CSDN, 广告
+categories: Tools
 ---
 
  # 移除CSDN各种广告 - Safari浏览器专用插件

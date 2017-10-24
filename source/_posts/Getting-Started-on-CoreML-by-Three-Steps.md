@@ -2,6 +2,7 @@
 title: Getting Started on CoreML by Three Steps
 date: 2017-10-23 11:47:53
 tags: CoreML, Machine Learning, iOS11
+categories: AI
 ---
 
 ## Core ML

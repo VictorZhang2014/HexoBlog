@@ -2,6 +2,7 @@
 title: Classifying Images with Vision and Core ML
 date: 2017-10-23 16:45:58
 tags: Core ML, Classifying Images
+categories: AI
 ---
 
 If you don't know the basic use of Core ML, see [this page](/2017/10/23/Getting-Started-on-CoreML-by-Three-Steps/) , on the contrary, keep going our tutorial.

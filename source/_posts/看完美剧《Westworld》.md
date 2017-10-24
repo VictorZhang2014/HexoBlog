@@ -2,6 +2,7 @@
 title: 看完美剧《Westworld》
 date: 2017-10-14 14:59:16
 tags: 美剧，西部世界, Westworld
+categories: Life
 ---
 
 前几个晚上我在腾讯视频看完`《西部世界》`，原名`《Westworld》`,去年上映的。
