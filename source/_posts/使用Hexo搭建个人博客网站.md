@@ -119,6 +119,10 @@ deploy:
   blog.googleplus.party
   ```
 
+#### 12.文章分类
+在主题的目录里的`_config.yml`文件里，添加你想要的`categories`，如：我想添加一个`Life`，那么它的路径就应该是`/categories/Life/`，此时如果直接在浏览器上预览这个地址，肯定报错，找不到，所以，我们需要新建文章，并且在文章的开头地方加上`categories: Life`，然后重新运行项目，即可看到分类文章了
+
+
 常用命令
 ```
 hexo new   文章名称 #新建文章

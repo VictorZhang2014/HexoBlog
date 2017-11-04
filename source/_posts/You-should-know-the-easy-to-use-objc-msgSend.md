@@ -2,6 +2,7 @@
 title: You should know the easy-to-use objc_msgSend
 date: 2017-10-10 12:15:12
 tags: objc_msgSend, runtime
+categories: iOS
 ---
 
 # Too many arguments to function call, expected 0, have 2

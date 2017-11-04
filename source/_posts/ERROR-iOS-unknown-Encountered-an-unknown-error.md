@@ -2,6 +2,7 @@
 title: 'ERROR | [iOS] unknown: Encountered an unknown error '
 date: 2016-10-20 18:22:38
 tags: cocoapods
+categories: iOS
 ---
 
 ## 使用环境

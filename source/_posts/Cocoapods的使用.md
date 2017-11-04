@@ -2,6 +2,7 @@
 title: Cocoapods的使用
 date: 2017-04-01 16:27:50
 tags: CocoaPods
+categories: iOS
 ---
 
 CocoaPods Command 

@@ -2,6 +2,7 @@
 title: iOS的Runloop认知
 date: 2017-10-15 19:35:32
 tags: iOS, Runloop
+categories: iOS
 ---
 
 ## 概念

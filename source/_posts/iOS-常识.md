@@ -2,6 +2,7 @@
 title: iOS 常识
 date: 2017-10-15 17:03:58
 tags: iOS, 架构, 系统的内存分配 
+categories: iOS
 ---
 
 ## 一、常用架构

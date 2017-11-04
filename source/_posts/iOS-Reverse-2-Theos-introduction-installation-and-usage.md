@@ -2,6 +2,7 @@
 title: 'iOS Reverse - (2) Theos introduction, installation and usage '
 date: 2017-06-04 20:10:17
 tags: theos, ldid
+categories: iOS
 ---
 
 # 1.Introduction

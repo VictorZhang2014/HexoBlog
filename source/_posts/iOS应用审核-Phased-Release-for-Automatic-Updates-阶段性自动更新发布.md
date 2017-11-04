@@ -2,6 +2,7 @@
 title: iOS应用审核 - Phased Release for Automatic Updates (阶段性自动更新发布)
 date: 2017-06-15 09:55:56
 tags: iOS, 应用审核, AppReview, Phased Release, Automatic Updates
+categories: iOS
 ---
 
 # Phased Release for Automatic Updates (阶段性自动更新发布)

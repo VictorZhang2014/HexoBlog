@@ -2,6 +2,7 @@
 title: GCD的一般认知
 date: 2017-10-15 17:04:21
 tags: iOS, GCD, 队列, 死锁
+categories: iOS
 ---
 
 ## GCD （Grand Central Dispatch）

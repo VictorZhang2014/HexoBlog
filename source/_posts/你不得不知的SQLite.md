@@ -2,6 +2,7 @@
 title: 你不得不知的SQLite
 date: 2017-10-20 19:08:31
 tags: SQLite, 优化
+categories: iOS
 ---
 
 很多时候，随着业务越来越好，系统所牵涉到的数据数量也是越来越多、越来越大，这时，许多系统的瓶颈就在数据的存储上了，所以我们就不得不考虑对数据库进行优化了。
@@ -98,7 +99,20 @@ sqlite> commit;                                     sqlite> end transaction;
 sqlite> end transaction;
 ```
 
+事务的另一个`优点`就是：可以`大批量`插入数据，我们都知道正常情况下，sql语句每执行一条，就会打开和关闭一次数据库，这样的速度显然是很慢的，那么如果我们需要大批量插入数据，而且一次打开和关闭数据了？那就是使用事务，因为所有的`insert`语句会在`commit`之前被缓存到内存中。
+
 <br/>
-[FMDB](https://github.com/ccgus/fmdb)
+<br/>
+
+## 关系型数据库
+[WCDB 由微信开发团队开源](https://github.com/Tencent/wcdb)
+[SQLCiper 加密](https://github.com/sqlcipher/sqlcipher)
+[FMDB 包含SQLCiper，多线程安全的](https://github.com/ccgus/fmdb)
 [SQLite中文教程](http://www.runoob.com/sqlite/sqlite-tutorial.html)
 [SQLite Official](https://www.sqlite.org/index.html)
+
+## Key-Value数据库
+代表有<a href="https://realm.io/" target="_blank">Realm</a>，<a href="https://github.com/google/leveldb" target="_blank">LevelDB</a>，<a href="https://github.com/facebook/rocksdb" target="_blank">RocksDB</a>等
+对于开发者而言，key-value的实现直接易懂，可以像使用NSDictionary一样使用Realm。并且ORM彻底，省去了拼装Object的过程。但其对代码侵入性很强，Realm要求类继承RLMObject的基类。这对于单继承的ObjC，意味着不能再继承其他自定义的子类。同时，key-value数据库对较为复杂的查询场景也比较无力。
+
+

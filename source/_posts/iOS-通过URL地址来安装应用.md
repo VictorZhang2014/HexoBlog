@@ -2,6 +2,7 @@
 title: iOS 通过URL地址来安装应用
 date: 2017-04-01 16:30:54
 tags: iOS app installation
+categories: iOS
 ---
 
 ## iOS应用通过URL地址来安装

@@ -2,6 +2,7 @@
 title: iOS中的锁
 date: 2017-10-15 17:30:34
 tags: NSLock, NSCondition, NSRecursiveLock, NSConditionLock, pthread_mutex, dispatch_semaphore
+categories: iOS
 ---
 
 ## 简介

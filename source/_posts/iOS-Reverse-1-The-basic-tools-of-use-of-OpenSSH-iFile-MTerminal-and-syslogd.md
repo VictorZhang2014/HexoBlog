@@ -3,6 +3,7 @@ title: iOS Reverse - (1) The basic tools of use of OpenSSH, iFile, MTerminal and
   syslogd
 date: 2017-06-04 19:47:05
 tags: OpenSSH, iFile, MTerminal, syslogd
+categories: iOS
 ---
 
 # 1.OpenSSH

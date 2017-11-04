@@ -2,6 +2,7 @@
 title: 'PushNotification in C#,Objective-c/C'
 date: 2017-01-18 17:46:50
 tags: C#,APNs,Objective-C,C
+categories: iOS
 ---
 
 # PushNotification

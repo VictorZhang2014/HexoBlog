@@ -2,6 +2,7 @@
 title: NSThread的认知
 date: 2017-10-15 18:36:14
 tags: iOS, NSThread
+categories: iOS
 ---
 
 ## 简介

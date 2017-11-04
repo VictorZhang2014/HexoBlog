@@ -2,6 +2,7 @@
 title: NSOperation的认知
 date: 2017-10-15 17:28:29
 tags: iOS, NSOperation
+categories: iOS
 ---
 
 [【官方文档】](https://developer.apple.com/documentation/foundation/nsoperation?language=objc)

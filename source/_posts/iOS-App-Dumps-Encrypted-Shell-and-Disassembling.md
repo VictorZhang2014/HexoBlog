@@ -2,6 +2,7 @@
 title: iOS App Dumps Encrypted Shell and Disassembling
 date: 2017-04-15 19:36:52
 tags: iOS Reverse Engineering, Unshell, Disassembling
+categories: iOS
 ---
 
 ## Overview
