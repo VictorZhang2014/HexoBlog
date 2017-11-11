@@ -2,7 +2,7 @@
 title: fishhook的基本使用，fishhook可以勾住系统函数
 date: 2017-10-26 19:15:02
 tags: Valgrind, C/C++, 内存管理
-categories: C-CPP, iOS
+categories: iOS
 ---
 
 ## 1.概念
