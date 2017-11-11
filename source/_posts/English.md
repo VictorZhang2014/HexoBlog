@@ -8,6 +8,10 @@ tags: English
 ## 视频列表 - 我添加了字幕
 
 <br/>
+<a href="https://www.youtube.com/watch?v=O3m1Z0HCopo" target="_blank">4.主题是：How to learn English idioms related to colours</a>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O3m1Z0HCopo" frameborder="0" allowfullscreen></iframe>
+
+<br/>
 <a href="https://youtu.be/8o9llKHOYD0" target="_blank">3.主题是：Confusing English Words (worn vs warn) • Learn the difference between these two confusing words </a>
 <iframe width="570" height="350" src="https://www.youtube.com/embed/8o9llKHOYD0" frameborder="0" allowfullscreen></iframe>
 
