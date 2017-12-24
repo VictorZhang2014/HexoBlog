@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Simplicity | Perfection
+title: Simple, but perfect
 subtitle: "What will you do if you weren't afraid ? "
 SEOtitle: "iOS,逆向工程,AI,.NET"
 description: "iOS,逆向工程,AI,.NET"
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: snippet
+theme: hexo-theme-pln
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

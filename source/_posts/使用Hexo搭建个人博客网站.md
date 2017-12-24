@@ -6,6 +6,8 @@ tags: victor, hexo
 
 使用Hexo搭建个人博客网站，类似这种文章在网上能找到很多，在这里我就不再一一赘述了，以下是个人搭建博客站点的经验所得，以分享。
 
+Hexo官方文档：https://hexo.io/
+
 Let's get started!
 
 需要安装git和nodejs
@@ -27,6 +29,7 @@ nvm install 4.5.0
 
 #### 2.安装hexo必要的组件  全局安装，加-g参数
   ```
+   sudo npm install hexo-cli -g
    sudo npm install hexo --save   # 或者 sudo npm install -g hexo
    sudo npm install hexo-deployer-git -save    # hexo发布时使用的命令
    sudo npm install hexo-server --save         # hexo调试时的本地server
