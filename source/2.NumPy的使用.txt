@@ -1,0 +1,502 @@
+NumPy的基本使用
+
+
+1.以下方式可以获得，符号的具体类型
+print np.dtype('D')  类型是complex128
+print np.dtype('f8') 类型是float64
+
+
+2.创建自定义dtype类型
+t = np.dtype([('name', np.str_, 40), ('numitems', np.int32), ('price', np.float32)]) 
+print t
+给这个自定义类型赋值
+itemz = np.array([('Meaning of Name', 42, 3.14), ('Butter', 13, 2.72)], dtype=t)
+print itemz
+
+
+3.数组与标量的运算
+arr = np.array([[1.,2.,3.], [4.,5.,6.]])
+print arr
+数组相乘
+print arr * arr
+数组相加
+print arr + arr
+
+
+4.一维数组的索引与切片
+a = np.arange(9)
+选取3-7的值，不含7
+print a[3:7]
+
+选取0-7的数
+print a[:7]
+
+每隔两个数选取一个，这个2也叫作步长
+print a[:7:2]
+
+数组反转
+print a[::-1]
+
+切片，意思和步长一样，在3到7的数字里，以步长为2来选取
+s = slice(3,7,2)
+
+
+5.多维数组的切片与索引
+创建一个2乘以3乘以4的数组，这样的数组，你可以看作是一个多个二维数组叠加的效果
+那么(2,3,4)的意思是：有一个两个二维的数据，每个维度的数据是3行4列
+b = np.arange(24).reshape(2,3,4)
+这个数组的值如下
+[
+    [
+        [ 0  1  2  3]
+        [ 4  5  6  7]
+        [ 8  9 10 11]
+    ]
+    [
+        [12 13 14 15]
+        [16 17 18 19]
+        [20 21 22 23]
+    ]
+]
+打印数组的维度
+print b.shape
+取值
+print b[0,0,0]
+
+取值，表示不指定具体维度的数据，也就对所有的维度的数据取值，取1行2列的值
+print b[:,0,1]  会打印出[ 1 13]
+倘若，要单独取每个维度的0,1位置的数据，则
+print b[0,0,1]  会输出1   意思是：第索引为0的数据维度的0行1列处的数据
+print b[1,0,1]  会输出13  意思是：第索引为1的数据维度的0行1列处的数据
+
+以下三种方式取值都是一样的，冒号表示省略，取当前索引处全部的值
+print b[0]      是：取索引为0的维度的表
+print b[0,:,:]  是：取索引为0的维度的表，不指定具体行具体列
+print b[0,...]  是：取索引为0的维度的表，忽略指定行和列
+
+表示第0维度的索引为1列的（也就是第二行），冒号表示，从0到到头，然后间隔为2的方式取值
+print b[0, 1, ::2]
+
+在看一个有意思的，表示每个维度里的每一行的第索引为1列的数据
+print b[..., 1]
+所以打印为
+[[ 1  5  9]
+ [13 17 21]]
+
+选取每个维度里的第索引为1行的数据
+print b[:,1]
+
+选取第索引为0的维度里的任意行的索引为1的数据
+print b[0,:,1]
+
+选取第索引为0的维度里的从后面往前列的第一列的值，注意：从后列往前列的值的第一列是从1开始（也就是-1）
+print b[0,:,-1]
+所以输出为：
+[ 3 7 11 ]
+
+将第索引为0的维度里的数据反转
+print b[0,::-1]
+[[ 8  9 10 11]
+ [ 4  5  6  7]
+ [ 0  1  2  3]]
+选取反转后的从后列往前列的第一列的值
+
+print b[0,::-1,-1]
+则
+[11  7  3]
+
+取第索引为0的维度里，每间隔为2的数据行，从后列往前列取值
+print b[0,::2,-1]]
+则
+[ 3 11]
+
+将两个维度的表互换行
+print b[::-1]
+
+将两个维度的表完全反转
+s = slice(None, None, -1)
+print b[(s,s,s)]
+
+
+6.布尔型索引
+names = np.array(['Bob','joe','Will','Bob','john'])
+print names == 'joe'
+会输出
+[False  True False False False]
+判断以下
+print (names == 'joe') | (names == 'Will')
+会输出
+[False  True  True False False]
+
+
+7.花式索引
+8行4列
+arr = np.empty((8, 4))
+初始化
+for i in range(8):
+    arr[i] = i
+print arr
+输出为
+[[ 0.  0.  0.  0.]
+ [ 1.  1.  1.  1.]
+ [ 2.  2.  2.  2.]
+ [ 3.  3.  3.  3.]
+ [ 4.  4.  4.  4.]
+ [ 5.  5.  5.  5.]
+ [ 6.  6.  6.  6.]
+ [ 7.  7.  7.  7.]]
+
+另一种声明方式，声明并初始化，8行4列
+arr = np.arange(32).reshape((8,4))
+print arr
+会输出
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]
+ [12 13 14 15]
+ [16 17 18 19]
+ [20 21 22 23]
+ [24 25 26 27]
+ [28 29 30 31]]
+取值第索引为1，5，7，2行的值
+print arr[[1,5,7,2]]
+输出
+[[ 4  5  6  7]
+ [20 21 22 23]
+ [28 29 30 31]
+ [ 8  9 10 11]]
+取值，对第一次取出来的值，进行第二次取值
+print arr[[1,5,7,2],[0,3,1,2]]
+输出
+[ 4 23 29 10]
+
+数组的维度转换，列转行
+print arr.T 
+输出
+[[ 0  4  8 12 16 20 24 28]
+ [ 1  5  9 13 17 21 25 29]
+ [ 2  6 10 14 18 22 26 30]
+ [ 3  7 11 15 19 23 27 31]]
+arr.T也可以写成arr.transpose()
+
+arr的原始数组为
+print arr
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]
+ [12 13 14 15]
+ [16 17 18 19]
+ [20 21 22 23]
+ [24 25 26 27]
+ [28 29 30 31]]
+
+8.改变数组的维度
+b = np.arange(24).reshape(2,3,4)
+arange是创建一个一维数组
+reshape是将数组转换成多维数组
+
+将多维数组转成一维数组，使用
+print b.flatten()
+
+也可以重新对数组设置维度，以下是将多维数组编程二维数组 6 * 4
+print b.shape = (6,4)
+
+重新设置数组维度通过resize
+b.resize((2,12))
+print b
+输出
+[[ 0  1  2  3  4  5  6  7  8  9 10 11]
+ [12 13 14 15 16 17 18 19 20 21 22 23]]
+
+
+
+9.数组的分割
+a = np.arange(9).reshape(3,3)
+输出
+[[0 1 2]
+ [3 4 5]
+ [6 7 8]]
+b = a * 2
+输出
+[[ 0  2  4]
+ [ 6  8 10]
+ [12 14 16]]
+
+如果需要水平组合
+print np.hstack((a,b))
+则输出
+array([[ 0,  1,  2,  0,  2,  4],
+       [ 3,  4,  5,  6,  8, 10],
+       [ 6,  7,  8, 12, 14, 16]])
+
+如果需要垂直组合
+print np.vstack((a,b))
+则输出
+[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 0  2  4]
+ [ 6  8 10]
+ [12 14 16]]
+
+上面的水平组合和垂直组合，也可以这么写
+ print np.concatenate((a,b), axis=0) 表示垂直组合
+ print np.concatenate((a,b), axis=1) 表示水平组合
+
+深度组合，就是本来两个二维数组，深度组合就变成了垂直方向顺序往下，
+print np.dstack((a,b))
+则输出
+[[[ 0  0]
+  [ 1  2]
+  [ 2  4]]
+
+ [[ 3  6]
+  [ 4  8]
+  [ 5 10]]
+
+ [[ 6 12]
+  [ 7 14]
+  [ 8 16]]]
+
+一维数组的深度组合
+one = np.arange(2)
+print one
+输出
+[0,1]
+two = one * 2
+print two
+输出
+[0,2]
+垂直深度组合
+print np.column_stack((one,two))
+[[0 0]
+ [1 2]]
+
+比较两个垂直深度组合的值是否一样
+print np.vstack((one, two)) == np.column_stack((one,two))
+输出
+[[ True False]
+ [False  True]]
+
+水平深度组合
+print np.row_stack((one,two))
+输出
+[[0 1]
+ [0 2]]
+
+
+数组的分割
+a = np.arange(9).reshape(3,3)
+垂直分割
+print np.hsplit(a, 3)
+[array([[0],
+       [3],
+       [6]]), array([[1],
+       [4],
+       [7]]), array([[2],
+       [5],
+       [8]])]
+水平分割，三个为一组的分割
+print np.split(a, 3, axis=0)
+输出
+[array([[0, 1, 2]]), array([[3, 4, 5]]), array([[6, 7, 8]])]
+
+三维数组的分割
+c = np.arange(27).reshape(3,3,3)
+输出
+[[[ 0  1  2]
+  [ 3  4  5]
+  [ 6  7  8]]
+
+ [[ 9 10 11]
+  [12 13 14]
+  [15 16 17]]
+
+ [[18 19 20]
+  [21 22 23]
+  [24 25 26]]]
+三个为一组的分割，共九组
+print np.dsplit(c, 3)
+[array([[[ 0],
+        [ 3],
+        [ 6]],
+
+       [[ 9],
+        [12],
+        [15]],
+
+       [[18],
+        [21],
+        [24]]]), array([[[ 1],
+        [ 4],
+        [ 7]],
+
+       [[10],
+        [13],
+        [16]],
+
+       [[19],
+        [22],
+        [25]]]), array([[[ 2],
+        [ 5],
+        [ 8]],
+
+       [[11],
+        [14],
+        [17]],
+
+       [[20],
+        [23],
+        [26]]])]
+
+
+数组的属性
+b = np.arange(24).reshape(2,12)
+print b.ndim 数组的维度
+print b.size 数组的长度
+print b.itemsize 数组每个元素的大小
+print b.nbytes 数组一共多大
+print b.real  看数组的实度
+print b.imag  看数组的虚度
+print b.flat  输出flat类型，为：numpy.flatiter
+print b.flat[2]  输出下标为2的值
+b.flat[2] = 100  通过flat修改元素的值
+
+print b.tolist()   转换成python的列表
+print b.tostring()  可能会失败，因为元素本身不是字符串
+print b.astype(int)  将数组里的元素转换成int,或者float等类型
+print b.astype(str)  将数组里的元素转成str，字符串
+
+
+
+
+
+
+
+
+
+
+
+
+
+NumPy的高阶函数
+通用函数
+add  数组元素相加
+subtract  数组元素相减
+multiply   数组元素相乘
+divide,floor_divide    除法，向下圆整除法，丢掉余数
+a = np.arane(10)
+b = np.arange(10)
+print np.add(a,b)
+print np.subtract(a,b)
+print np.sum(a)  
+
+将条件逻辑表达为数组运算
+xarr = np.array([1.1,1.2,1.3,1.4,1.5])
+yarr = np.array([2.1,2.2,2.3,2.4,2.5])
+cond = np.array([True,False,True,True,True,False])
+#意思是，如果c成立，执行x，否则，执行y
+result = [(x if c else y) for x,y,c in zip(xarr,yarr,cond)]
+print result
+[1.1000000000000001, 2.2000000000000002, 1.3, 1.3999999999999999, 1.5]
+
+它的效率不够快，因为是原始python的array，
+如果使用numpy，速度会更快，而且精准
+result = np.where(cond,xarr,yarr)
+print result
+[ 1.1  2.2  1.3  1.4  1.5]
+
+它还可以这么用
+a = 1
+b = 2
+print np.where(a > b, 20, 30)
+结果为30
+where的使用，如果换做是for循环的话，会比较麻烦
+嵌套使用
+np.where(cond1 & cond2, 0, 
+            np.where(cond1,1, 
+                np.where(cond2, 2, 3)
+            )
+        )
+
+mean  算术平均数，零长度的数组的mean为NaN
+arr = np.random.randn(5,4)
+以下两个结果是一样的
+print arr.mean()
+print np.mean(arr)
+我们也可以控制它的水平或者垂直的平均数
+print np.mean(arr,axis=1)
+所有元素的累计和
+print arr.cumsum(0)
+所有元素的累计积
+print arr.cumprod(0)
+
+randn是在random的命名空间下
+from numpy.random import randn
+
+arr = randn(10)
+对大于0的元素求和
+print (arr > 0).sum()
+
+bools = np.array([False, False, True, False])
+print bools.any()  只有有一个为true就是true
+print bools.all()  只要有一个为false就是false
+
+
+排序
+arr = randn(8)
+排序
+arr.sort()
+
+names = np.array(['Bob','Joe','An','Bob'])
+排重并排序
+print np.unique(names)
+输出
+['An' 'Bob' 'Joe']
+
+
+
+
+
+线性代数
+常用的numpy.linalg函数
+from numpy.linalg import inv, qr
+diag   以一维数组的形式返回方阵的对角线（或非对角线）元素
+dot   矩阵乘法
+trace 计算对角线元素的和
+det  计算矩阵行列式
+inv  计算方阵的逆
+qr   计算QR分解
+
+x = np.array([[1.,2.,3.],[4.,5.,6.]])
+y = np.array([[2,4],[9,3],[-4, 5]])
+以下输出结果一样
+print x.dot(y)
+print np.dot(x, y)
+
+
+产生随机数
+from numpy.random import randn
+也可以
+import random
+seed   随机生成器的种子
+randn  产生正态分布，平均值为0，标准差为1的样本值，
+shuffle   对一个序列随机排序
+
+samples = np.ransom.normal(size=(4,4))
+print samples.min()
+print samples.max()
+
+
+
+
+文件分析
+1.最基础的csv文件的分析，查看data_csv_read.py文件
+
+
+
+
+
+
+
+
