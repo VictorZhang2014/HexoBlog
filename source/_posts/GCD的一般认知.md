@@ -85,7 +85,7 @@ dispatch_queue_t queue= dispatch_queue_create("my_queue_concurrent", DISPATCH_QU
     });
     NSLog(@"5");
     
-    //会打印1，3，2 然后死锁并崩溃
+    //会打印1，5，2 然后死锁并崩溃
 }
 
 // 有死锁案例3
