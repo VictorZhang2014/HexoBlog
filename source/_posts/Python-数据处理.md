@@ -29,6 +29,62 @@ RuntimeError: Python is not installed as a framework. The Mac OS X backend will 
 ```
 那么解决方法在：https://stackoverflow.com/questions/21784641/installation-issue-with-matplotlib-python
 
+```
+# coding: utf-8
+
+from __future__ import division
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+from scipy.interpolate import lagrange  # 导入拉格朗日插值法
+
+np.random.seed(12345)
+plt.rc('figure', figsize=(10, 6))
+
+import pandas as pd
+np.set_printoptions(precision=4, threshold=500)
+pd.options.display.max_rows = 100
+
+
+## 缺失值处理 -- 拉格朗日插值法
+inputfile = 'data_screening_files/catering_sale.xls' # 销量数据
+outputfile = 'data_screening_files/sales.xls'  # 输出数据路径
+
+data = pd.read_excel(inputfile)
+print data
+'''
+            日期      销量
+0   2015-03-01    51.0
+1   2015-02-28  2618.2
+2   2015-02-27  2608.4
+3   2015-02-26  2651.9
+4   2015-02-25  3442.1
+5   2015-02-24  3393.1
+......
+
+[201 rows x 2 columns]
+'''
+
+# 过滤异常值，将其变为空值
+exception_values = data[u'销量'][(data[u'销量'] < 400) | (data[u'销量'] > 5000)]
+print(exception_values)
+'''
+0        51.00
+8      6607.40
+103      22.00
+110      60.00
+144    9106.44
+Name: 销量, dtype: float64
+'''
+
+# 会报错
+# data[u'销量'][(data[u'销量'] < 400) | (data[u'销量'] > 5000)] = None
+# print(data)
+
+
+# 自定义列向量插值函数
+
+```
 
 
 
