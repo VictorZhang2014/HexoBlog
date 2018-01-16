@@ -549,8 +549,7 @@ three      2         5
 
 ## 数据转换
 - 删除重复数据
-- 利用函数或映射进行数据转换
-- 
+
 
 ```
 # coding: utf-8
@@ -587,11 +586,20 @@ print data.duplicated()
 
 # 删除重复数据
 data.drop_duplicates()
+print data
+'''
+    k1  k2
+0  one   1
+1  one   1
+2  one   2
+3  two   3
+4  two   3
+5  two   4
+6  two   4
+'''
 
 # 添加一列
 data['v1'] = range(7)
-data.drop_duplicates(['k1'])
-
 print data
 '''
     k1  k2  v1
@@ -604,20 +612,239 @@ print data
 6  two   4   6
 '''
 
+# 删除一列
+data.drop_duplicates(['k1'])
+print data
+'''
+    k1  k2  v1
+0  one   1   0
+1  one   1   1
+2  one   2   2
+3  two   3   3
+4  two   3   4
+5  two   4   5
+6  two   4   6
+'''
+```
+
+
+## 利用函数或映射进行数据转换
+```
+# coding: utf-8
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
+data = DataFrame({'food': ['bacon', 'pastrami', 'nova lox'],
+                  'ounces': [4, 2, 8]})
+print data
+'''
+       food  ounces
+0     bacon       4
+1  pastrami       2
+2  nova lox       8
+'''
+
+meat_to_animal = {
+    'bacon': 'pig',
+    'pastrami': 'cow',
+    'nova lox': 'salmon'
+}
+
+# 全部转成小写，使用map
+data['animal'] = data['food'].map(str.lower)
+print data
+'''
+       food  ounces    animal
+0     bacon       4     bacon
+1  pastrami       2  pastrami
+2  nova lox       8  nova lox
+'''
+
+# 然后将对应的类型添加到data中
+data['animal'] = data['food'].map(str.lower).map(meat_to_animal)
+print data
+'''
+       food  ounces  animal
+0     bacon       4     pig
+1  pastrami       2     cow
+2  nova lox       8  salmon
+'''
+
+# 通过lambda这样的表达式也可以完成和上面一样的效果
+data['food'].map(lambda x: meat_to_animal[x.lower()])
+print data
+'''
+       food  ounces  animal
+0     bacon       4     pig
+1  pastrami       2     cow
+2  nova lox       8  salmon
+'''
+
+```
+
+
+
+## 数据标准化
+```
+# coding: utf-8
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
+
+datafile = 'data_screening_files/normalization_data.xls'
+
+# 读取数据
+data = pd.read_excel(datafile, header=None)
+print "原始数据："
+print data
+'''
+原始数据：
+     0    1    2     3
+0   78  521  602  2863
+1  144 -600 -521  2245
+2   95 -457  468 -1283
+3   69  596  695  1054
+4  190  527  691  2051
+5  101  403  470  2487
+6  146  413  435  2571
+'''
+
+# 最小最大规范化
+print (data - data.min()) / (data.max() - data.min())
+'''
+          0         1         2         3
+0  0.074380  0.937291  0.923520  1.000000
+1  0.619835  0.000000  0.000000  0.850941
+2  0.214876  0.119565  0.813322  0.000000
+3  0.000000  1.000000  1.000000  0.563676
+4  1.000000  0.942308  0.996711  0.804149
+5  0.264463  0.838629  0.814967  0.909310
+6  0.636364  0.846990  0.786184  0.929571
+'''
+
+# 零-均值规范化
+print (data - data.mean()) / data.std()
+'''
+          0         1         2         3
+0 -0.905383  0.635863  0.464531  0.798149
+1  0.604678 -1.587675 -2.193167  0.369390
+2 -0.516428 -1.304030  0.147406 -2.078279
+3 -1.111301  0.784628  0.684625 -0.456906
+4  1.657146  0.647765  0.675159  0.234796
+5 -0.379150  0.401807  0.152139  0.537286
+6  0.650438  0.421642  0.069308  0.595564
+'''
+
+# 小数定标规范化
+print data / 10 ** np.ceil(np.log10(data.abs().max()))
+'''
+       0      1      2       3
+0  0.078  0.521  0.602  0.2863
+1  0.144 -0.600 -0.521  0.2245
+2  0.095 -0.457  0.468 -0.1283
+3  0.069  0.596  0.695  0.1054
+4  0.190  0.527  0.691  0.2051
+5  0.101  0.403  0.470  0.2487
+6  0.146  0.413  0.435  0.2571
+'''
+```
+
+
+## 替换值
+```
+# coding: utf-8
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
+
+data = Series([1., -999., 2., -999., -1000., 3.])
+print data
+'''
+0       1.0
+1    -999.0
+2       2.0
+3    -999.0
+4   -1000.0
+5       3.0
+dtype: float64
+'''
+
+# 替换-999的值为NaN
+data = data.replace(-999, np.nan)
+print data
+'''
+0       1.0
+1       NaN
+2       2.0
+3       NaN
+4   -1000.0
+5       3.0
+dtype: float64
+'''
+
+# 替换两个值都为NaN
+data = data.replace([-999, -1000], np.nan)
+print data
+'''
+0    1.0
+1    NaN
+2    2.0
+3    NaN
+4    NaN
+5    3.0
+dtype: float64
+'''
+
+# 如果我们需要替换多种值为指定的值
+data = data.replace({-999: np.nan, -1000: 0})
+print data
+'''
+0    1.0
+1    NaN
+2    2.0
+3    NaN
+4    NaN
+5    3.0
+dtype: float64
+'''
+```
+
+
+## 重命名轴索引
+```
+# coding: utf-8
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
 
 data = DataFrame(np.arange(12).reshape((3, 4)),
                  index=['Ohio', 'Colorado', 'New York'],
                  columns=['one', 'two', 'three', 'four'])
+print data
+'''
+          one  two  three  four
+Ohio        0    1      2     3
+Colorado    4    5      6     7
+New York    8    9     10    11
+'''
 
-# 将Index都转成大写
+# 将索引全部转为大写
 print data.index.map(str.upper)
 '''
 Index([u'OHIO', u'COLORADO', u'NEW YORK'], dtype='object')
 '''
 
-# 转大写
-# data.index = data.index.map(str.upper)
-# print data
+# 将data的index里的值都换成大写
+data.index = data.index.map(str.upper)
+print data
 '''
           one  two  three  four
 OHIO        0    1      2     3
@@ -625,7 +852,7 @@ COLORADO    4    5      6     7
 NEW YORK    8    9     10    11
 '''
 
-# 转大写
+# 通过rename我们也可以完成相同的效果，把title都转成大写
 print data.rename(index=str.title, columns=str.upper)
 '''
           ONE  TWO  THREE  FOUR
@@ -634,17 +861,339 @@ Colorado    4    5      6     7
 New York    8    9     10    11
 '''
 
-# 转大写
-print data.rename(index={"OHIO": "INDIANA"},
-            columns={"three": "peekaboo"})
+# 其实rename就是重命名
+data.rename(index={'OHIO': 'INDIANA'},
+            columns={'three': 'peekaboo'})
+print data
 '''
-          one  two  peekaboo  four
-Ohio        0    1         2     3
-Colorado    4    5         6     7
-New York    8    9        10    11
+          one  two  three  four
+OHIO        0    1      2     3
+COLORADO    4    5      6     7
+NEW YORK    8    9     10    11
+'''
+```
+
+
+
+## 离散化与面元划分
+```
+# coding: utf-8
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
+# 有这些年龄段
+ages = [20, 22, 25, 27, 21, 23, 37, 61, 78]
+
+# 根据这个条件分组
+groups = [18, 25, 35, 60]
+
+# 对数据进行分组
+cats = pd.cut(ages, groups)
+print cats
+'''
+[(18, 25], (18, 25], (18, 25], (25, 35], (18, 25], (18, 25], (35, 60], NaN, NaN]
+Categories (3, interval[int64]): [(18, 25] < (25, 35] < (35, 60]]
 '''
 
+print cats.labels
+'''
+[ 0  0  0  1  0  0  2 -1 -1]
+'''
+
+# 统计一下个数，每个年龄阶段的个数有多少
+print pd.value_counts(cats)
+'''
+(18, 25]    5
+(35, 60]    1
+(25, 35]    1
+dtype: int64
+'''
+
+
+#group_names = ['Youth', 'YoungAdult', 'MiddleAge', 'Senior']
+#print pd.cut(ages, groups, labels=group_names)
+'''
+报错：'Bin labels must be one fewer than '
+ValueError: Bin labels must be one fewer than the number of bin edges
+'''
+
+# 长度为20的随机数组
+data = np.random.rand(20)
+print data
+'''
+[0.10734531 0.25739656 0.57500249 0.26341356 0.06755529 0.31844072
+ 0.40825376 0.63144798 0.34930756 0.28772671 0.82629089 0.4465668
+ 0.4369444  0.01694405 0.98986687 0.4619442  0.58291355 0.82963555
+ 0.75812264 0.75970419]
+'''
+
+# 将2个为一个阶段划分
+print pd.cut(data, 4, precision=2)
+'''
+[(0.77, 0.99], (0.54, 0.77], (0.77, 0.99], (0.32, 0.54], (0.32, 0.54], ..., (0.77, 0.99], (0.77, 0.99], (0.094, 0.32], (0.77, 0.99], (0.77, 0.99]]
+Length: 20
+Categories (4, interval[float64]): [(0.094, 0.32] < (0.32, 0.54] < (0.54, 0.77] < (0.77, 0.99]]
+
+'''
+
+
+data = np.random.randn(1000)
+cats = pd.qcut(data, 4)
+print cats
+'''
+[(-3.936, -0.682], (-0.682, -0.0449], (-0.0449, 0.637], (-0.682, -0.0449], (-0.682, -0.0449], ..., (0.637, 3.161], (-0.682, -0.0449], (-0.0449, 0.637], (-0.0449, 0.637], (-0.682, -0.0449]]
+Length: 1000
+Categories (4, interval[float64]): [(-3.936, -0.682] < (-0.682, -0.0449] < (-0.0449, 0.637] <
+                                    (0.637, 3.161]]
+'''
+
+# 统计一下
+print pd.value_counts(cats)
+'''
+(0.635, 3.356]       250
+(-0.0177, 0.635]     250
+(-0.697, -0.0177]    250
+(-2.877, -0.697]     250
+dtype: int64
+'''
 ```
+
+
+## 检测和过滤异常值
+```
+# coding: utf-8
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
+
+data = DataFrame(np.random.randn(1000, 4))
+print data.describe()
+'''
+                 0            1            2            3
+count  1000.000000  1000.000000  1000.000000  1000.000000
+mean      0.033659     0.009555     0.018607     0.000988
+std       0.992909     0.990339     0.961525     1.014569
+min      -2.900505    -3.101781    -3.571700    -3.743653
+25%      -0.615258    -0.615599    -0.626577    -0.693573
+50%       0.056842     0.028285    -0.015288    -0.040166
+75%       0.721320     0.664719     0.609565     0.689604
+max       3.475868     3.099867     3.611240     3.373796
+'''
+
+col = data[3]
+print col[np.abs(col) > 3]
+'''
+79    -3.216870
+769    3.154073
+Name: 3, dtype: float64
+'''
+```
+
+
+## 排列和随机抽样
+```
+# coding: utf-8
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
+
+df = DataFrame(np.arange(5 * 4).reshape((5, 4)))
+print df
+'''
+    0   1   2   3
+0   0   1   2   3
+1   4   5   6   7
+2   8   9  10  11
+3  12  13  14  15
+4  16  17  18  19
+'''
+
+sampler = np.random.permutation(5)
+print sampler
+'''
+[0 3 1 2 4]
+'''
+
+# 无范围抽样
+print df.take(sampler)
+'''
+    0   1   2   3
+4  16  17  18  19
+0   0   1   2   3
+1   4   5   6   7
+3  12  13  14  15
+2   8   9  10  11
+'''
+
+# 无范围抽样
+print df.take(np.random.permutation(len(df))[:3])
+'''
+    0   1   2   3
+4  16  17  18  19
+2   8   9  10  11
+3  12  13  14  15
+'''
+
+print "-------------------"
+
+bag = np.array([5, 7, -1, 6, 4])
+sampler = np.random.randint(0, len(bag), size=10)
+print sampler
+'''
+[3 1 2 2 4 1 3 3 2 2]
+'''
+
+# 有范围抽样
+draws = bag.take(sampler)
+print draws
+'''
+[ 7 -1  4  6  7  4  6  5  6  4]
+'''
+```
+
+
+## 计算指标和哑变量
+```
+# coding: utf-8
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
+
+df = DataFrame({'key': ['b', 'b', 'a', 'c', 'a', 'b'],
+                'data1': range(6)})
+print df
+'''
+   data1 key
+0      0   b
+1      1   b
+2      2   a
+3      3   c
+4      4   a
+5      5   b
+'''
+
+print pd.get_dummies(df['key'])
+'''
+   a  b  c
+0  0  1  0
+1  0  1  0
+2  1  0  0
+3  0  0  1
+4  1  0  0
+5  0  1  0
+'''
+
+dummies = pd.get_dummies(df['key'], prefix='key')
+df_with_dummy = df[['data1']].join(dummies)
+print df_with_dummy
+'''
+   data1  key_a  key_b  key_c
+0      0      0      1      0
+1      1      0      1      0
+2      2      1      0      0
+3      3      0      0      1
+4      4      1      0      0
+5      5      0      1      0
+'''
+
+
+# 拿电影的数据举例
+mnames = ['movie_id', 'title', 'genres']
+movies = pd.read_table('data_screening_files/movies.dat', sep='::', header=None, names=mnames)
+
+# 取出前十个
+print movies[:10]
+'''
+   movie_id                               title                        genres
+0         1                    Toy Story (1995)   Animation|Children's|Comedy
+1         2                      Jumanji (1995)  Adventure|Children's|Fantasy
+2         3             Grumpier Old Men (1995)                Comedy|Romance
+3         4            Waiting to Exhale (1995)                  Comedy|Drama
+4         5  Father of the Bride Part II (1995)                        Comedy
+5         6                         Heat (1995)         Action|Crime|Thriller
+6         7                      Sabrina (1995)                Comedy|Romance
+7         8                 Tom and Huck (1995)          Adventure|Children's
+8         9                 Sudden Death (1995)                        Action
+9        10                    GoldenEye (1995)     Action|Adventure|Thriller
+
+'''
+
+
+genre_iter = (set(x.split('|')) for x in movies.genres)
+genres = sorted(set.union(*genre_iter))
+print genres
+'''
+['Action', 'Adventure', 'Animation', "Children's", 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy', 'Film-Noir', 'Horror', 'Musical', 'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 'War', 'Western']
+'''
+```
+
+
+## 线损率属性构造
+```
+# coding: utf-8
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+
+
+inputfile = 'data_screening_files/electricity_data.xls'
+outputfile = 'data_screening_files/electricity_data_out.xls'
+
+data = pd.read_excel(inputfile)
+print "元数据："
+print data
+'''
+元数据：
+   供入电量  供出电量
+0   986   912
+1  1208  1083
+2  1108   975
+3  1082   934
+4  1285  1102
+'''
+
+data[u'线损率'] = (data[u'供入电量'] - data[u'供出电量']) / data[u'供入电量']
+print "结果："
+print data
+'''
+结果：
+   供入电量  供出电量       线损率
+0   986   912  0.075051
+1  1208  1083  0.103477
+2  1108   975  0.120036
+3  1082   934  0.136784
+4  1285  1102  0.142412
+'''
+
+data.to_excel(outputfile, index=False)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
