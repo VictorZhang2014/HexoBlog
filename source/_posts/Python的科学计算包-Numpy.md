@@ -1384,9 +1384,77 @@ Day =  4 , Prices =  [[ 336.1   346.5   356.85  350.56  348.16  360.    351.99]]
 
 
 
+## 基本概念
+- 标量（Scalars）, 表示零维张量，它是一个单独的，独立的数值
+
+- 向量（Vectors）, 表示一维张量，它是一维数组，可以是横向数组(rows vectors)，也可以纵向数组（columns vectors）
+
+- 矩阵（Matrics）, 表示二维张量，它是一个二维数组，用行数和列数表示它的大小
+
+- 张量（Tensor）, 任何大于二维的对象，就是张量
 
 
+## 矩阵乘法
+- 1.左侧矩阵的列数必须等于右侧矩阵的行数
+- 2.结果矩阵始终与左侧矩阵有相同的行数，与右侧矩阵有相同的列数
+- 3.顺序很重要：乘法A * B不等于乘法B * A
+- 4.左侧矩阵中的数据应排列为行，而右侧矩阵中的数据应排列为列
 
+记住这四点，在你构建神经网络时，就能搞清楚如何正确排列矩阵乘法了
+
+矩阵乘积函数`matmul`和`dot`，这两个函数计算的结果实一样的，但是它们还是有差别的，请查阅文档。
+```
+# 比如：第一个矩阵
+a = np.array([[1,2,3,4],[5,6,7,8]])
+a
+# 显示以下结果：
+# array([[1, 2, 3, 4],
+#        [5, 6, 7, 8]])
+a.shape
+# 显示以下结果：
+# (2, 4)
+
+# 第二个矩阵
+b = np.array([[1,2,3],[4,5,6],[7,8,9],[10,11,12]])
+b
+# 显示以下结果：
+# array([[ 1,  2,  3],
+#        [ 4,  5,  6],
+#        [ 7,  8,  9],
+#        [10, 11, 12]])
+b.shape
+# 显示以下结果：
+# (4, 3)
+
+
+# 矩阵乘积
+c = np.matmul(a, b)
+c
+# 显示以下结果：
+# array([[ 70,  80,  90],
+#        [158, 184, 210]])
+c.shape
+# 显示以下结果：
+# (2, 3)
+
+```
+如果你的矩阵具有不兼容的形状，则会出现以下错误：
+```
+np.matmul(b, a)
+# 显示以下错误：
+# ValueError: shapes (4,3) and (2,4) not aligned: 3 (dim 1) != 2 (dim 0)
+```
+
+重点是，矩阵乘积的结果是如何计算得来的了？
+过程如图：
+![Matrics_Multiplication_1](/img/Python/NumPy/Matrics_Multiplication_1.png)
+![Matrics_Multiplication_2](/img/Python/NumPy/Matrics_Multiplication_2.png)
+![Matrics_Multiplication_3](/img/Python/NumPy/Matrics_Multiplication_3.png)
+![Matrics_Multiplication_4](/img/Python/NumPy/Matrics_Multiplication_4.png)
+![Matrics_Multiplication_5](/img/Python/NumPy/Matrics_Multiplication_5.png)
+![Matrics_Multiplication_6](/img/Python/NumPy/Matrics_Multiplication_6.png)
+
+矩阵乘积视频地址：https://youtu.be/JRoCFQRP4B0
  
 
 
