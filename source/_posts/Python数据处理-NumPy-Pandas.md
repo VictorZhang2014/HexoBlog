@@ -19,6 +19,23 @@ categories: AI
 - 示例
 
 
+
+
+本篇教程使用的所有资源文件下载地址：
+- [catering_sale.xls](/files/data_screening_files/catering_sale.xls)
+- [electricity_data.xls](/files/data_screening_files/electricity_data.xls)
+- [foods-2011-10-03.json](/files/data_screening_files/foods-2011-10-03.json)
+- [macrodata.csv](/files/data_screening_files/macrodata.csv)
+- [movies.dat](/files/data_screening_files/movies.dat)
+- [normalization_data.xls](/files/data_screening_files/normalization_data.xls)
+- [olivier.txt](/files/data_screening_files/olivier.txt)
+- [principal_component.xls](/files/data_screening_files/principal_component.xls)
+
+
+
+
+
+
 ## 拉格朗日 插值法 
 该算法在SciPy里
 拉格朗日插值法和牛顿插值法得到的结果是一样的，只不过他们的过程不一样，在Python的科学计算库中，我们只能使用拉格朗日插值法，因为没有牛顿插值法
@@ -1179,41 +1196,371 @@ data.to_excel(outputfile, index=False)
 
 
 
+## 字符串操作（内置函数）
+- Split
+- Strip
+- count
+- find/rfind
+- replace
+- lower/upper
+- ljust/rjust
+等等
+
+```
+val = 'a, b, guido'
+
+# 拆分时，前后空格没有清空
+a = val.split(',')
+print a
+'''
+['a', ' b', ' guido']
+'''
+
+# 拆分时，去掉每个元素的前后空格
+pieces = [x.strip() for x in val.split(',')]
+print pieces
+'''
+['a', 'b', 'guido']
+'''
+
+# 将数组所有的元素拼接
+b = '::'.join(pieces)
+print b
+'''
+a::b::guido
+'''
+
+# 查看一个字符串是否在指定字符串里
+print 'guido' in val
+'''
+True
+'''
+
+# 查找逗号的第一个索引位置，如果没有找到指定字符串，则报错
+print val.index(',')
+'''
+1
+'''
+
+# 查找冒号，-1表示没有找到，这个与index有区别就是，找不到，不会报错
+print val.find(':')
+'''
+-1
+'''
+
+# 统计个数
+print val.count('a')
+'''
+a
+'''
+
+# 替换指定字符
+print val.replace(',', ':')
+'''
+a: b: guido
+'''
+
+# 全部转大写
+print val.upper()
+'''
+A, B, GUIDO
+'''
+```
 
 
 
+## 正则表达式
+Python内置，正则表达式在Re模块
+- findall, finditer
+- match
+- search
+- split
+- sub, subn
+等
+```
+# coding: utf-8
+
+import re
+
+text = "foo     bar\t baz \tqux"
+
+# 描述一个或者多个空格符号，用 \s 表示
+print re.split('\s+', text)
+'''
+['foo', 'bar', 'baz', 'qux']
+'''
+
+# 先指定一个正则表达式模式，然后使用这个实例对象去调用
+regex = re.compile('\s+')
+print regex.split(text)
+'''
+['foo', 'bar', 'baz', 'qux']
+'''
+
+# 返回所有匹配 \s 的项
+print regex.findall(text)
+'''
+['     ', '\t ', ' \t']
+'''
+
+
+email = """
+Dave dave@google.com
+Steve steve@gmail.com
+Victor victorzhangq@qq.com
+"""
+
+#  [A-Z0-9._%+-] 表示A-Z，0-9，._%+-都可以
+#  +@            表示紧跟一个@符号
+#  [A-Z0-9.-]    表示A-Z，0-9，.-都可以
+#  +\.           表示紧跟一个.  而表示转义
+#  [A-Z]{2,4}    表示A-Z内，只能2-4位字母
+pattern = r'[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}'
+
+# 创建匹配模式，且忽略大小写
+regex1 = re.compile(pattern, flags=re.IGNORECASE)
+
+print regex1.findall(email)
+'''
+['dave@google.com', 'steve@gmail.com', 'victorzhangq@qq.com']
+'''
+
+# m = regex1.search(email)
+# print(text[m.start():m.end()])
+
+# n = regex1.match(email)
+
+print(regex1.sub('REDACTED', email))
+'''
+Dave REDACTED
+Steve REDACTED
+Victor REDACTED
+'''
+
+```
+
+
+## Pandas中矢量化字符串方法
+- cat
+- containsp
+- count
+- endswith, startswith
+- findall
+- get
+- join
+- len
+- pad
+- replace
+等等
+```
+# coding: utf-8
+
+import re
+from pandas import Series
+
+data = {"Dave": "dave@google.com", "Steve": "steve@gmail.com", "Victor": "victorzhangq@qq.com"}
+data = Series(data)
+print data
+'''
+Dave          dave@google.com
+Steve         steve@gmail.com
+Victor    victorzhangq@qq.com
+dtype: object
+'''
+
+print data.isnull()
+'''
+Dave      False
+Steve     False
+Victor    False
+dtype: bool
+'''
+
+print(data.str.contains('gmail'))
+'''
+Dave      False
+Steve      True
+Victor    False
+dtype: bool
+'''
+
+pattern = r'[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}'
+
+# 也可以用正则表达式和pandas配合用
+print data.str.findall(pattern, flags=re.IGNORECASE)
+'''
+Dave          [dave@google.com]
+Steve         [steve@gmail.com]
+Victor    [victorzhangq@qq.com]
+dtype: object
+'''
+
+matches = data.str.match(pattern, flags=re.IGNORECASE)
+print matches
+'''
+Dave      True
+Steve     True
+Victor    True
+dtype: bool
+'''
+
+# 取返回结果索引为1的值
+print matches.get(1)
+'''
+True
+'''
+
+# 同上
+print matches[1]
+'''
+True
+'''
+
+# 截取前五个字符
+print data.str[:5]
+'''
+Dave      dave@
+Steve     steve
+Victor    victo
+dtype: object
+'''
+```
 
 
 
+##  json数据处理
+```
+# coding: utf-8
+
+import json
+import pandas as pd
+from pandas import DataFrame
 
 
+db = json.load(open('data_screening_files/foods-2011-10-03.json'))
+
+# 有多少条
+print len(db)
+'''
+6636
+'''
+
+print db[0].keys()
+'''
+[u'portions', u'description', u'tags', u'nutrients', u'group', u'id', u'manufacturer']
+'''
+
+print db[0]['nutrients'][0]
+'''
+{u'units': u'g', u'group': u'Composition', u'description': u'Protein', u'value': 25.18}
+'''
+
+# 取前面7行数据
+nutrients = DataFrame(db[0]['nutrients'])
+print nutrients[:7]
+'''
+                   description        group units    value
+0                      Protein  Composition     g    25.18
+1            Total lipid (fat)  Composition     g    29.20
+2  Carbohydrate, by difference  Composition     g     3.06
+3                          Ash        Other     g     3.28
+4                       Energy       Energy  kcal   376.00
+5                        Water  Composition     g    39.28
+6                       Energy       Energy    kJ  1573.00
+'''
+
+info_keys = ['description', 'group', 'id', 'manufacturer']
+info = DataFrame(db, columns=info_keys)
+print info[:5]
+'''
+                          description                   group    id  \
+0                     Cheese, caraway  Dairy and Egg Products  1008   
+1                     Cheese, cheddar  Dairy and Egg Products  1009   
+2                        Cheese, edam  Dairy and Egg Products  1018   
+3                        Cheese, feta  Dairy and Egg Products  1019   
+4  Cheese, mozzarella, part skim milk  Dairy and Egg Products  1028   
+
+  manufacturer  
+0               
+1               
+2               
+3               
+4   
+'''
 
 
+print pd.value_counts(info.group)[:10]
+'''
+Vegetables and Vegetable Products    812
+Beef Products                        618
+Baked Products                       496
+Breakfast Cereals                    403
+Legumes and Legume Products          365
+Fast Foods                           365
+Lamb, Veal, and Game Products        345
+Sweets                               341
+Fruits and Fruit Juices              328
+Pork Products                        328
+Name: group, dtype: int64
+'''
+
+nutrients = []
+for rec in db:
+    fnuts = DataFrame(rec['nutrients'])
+    fnuts['id'] = rec['id']
+    nutrients.append(fnuts)
+
+nutrients = pd.concat(nutrients, ignore_index=True)
+# print nutrients
+'''
+                               description        group    units     value  \
+0                                  Protein  Composition        g    25.180   
+1                        Total lipid (fat)  Composition        g    29.200   
+2              Carbohydrate, by difference  Composition        g     3.060   
+3                                      Ash        Other        g     3.280   
+4                                   Energy       Energy     kcal   376.000
+......
+[389355 rows x 5 columns]
+'''
+
+# 去掉重复项，然后统计有多少行
+print nutrients.duplicated().sum()
+'''
+14179
+'''
+
+# 删除掉重复项，并统计行数
+# print nutrients.drop_duplicated().sum()
 
 
+# 重命名
+col_mapping = {"description": "food",
+               "group": "fgroup"}
+info = info.rename(columns=col_mapping, copy=False)
+print info[:3]
+'''
+              food                  fgroup    id manufacturer
+0  Cheese, caraway  Dairy and Egg Products  1008             
+1  Cheese, cheddar  Dairy and Egg Products  1009             
+2     Cheese, edam  Dairy and Egg Products  1018  
+'''
 
+# 使用外链接，id相等的
+ndata = pd.merge(nutrients, info, on='id', how='outer')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# .ix能通过行号和行标签进行取值
+# .iloc只能通过行号进行取值
+print ndata.ix[100]
+'''
+description                      Water
+group                      Composition
+units                                g
+value                            39.28
+id                                1008
+food                   Cheese, caraway
+fgroup          Dairy and Egg Products
+manufacturer                          
+Name: 100, dtype: object
+'''
+```
 
